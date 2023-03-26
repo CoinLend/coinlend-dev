@@ -1,65 +1,55 @@
-import React, { useReducer, useCallback, useEffect } from "react";
-import Web3 from "web3";
-import EthContext from "./EthContext";
+import React, { useState , useEffect, createContext, useContext } from "react";
+import {ethers} from "ethers";
 import { reducer, actions, initialState } from "./state";
 
+const mainABI = require('../contracts/Main.json');
+
+export const EthContext = createContext();
+
 function EthProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const init = useCallback(
-    async artifact => {
-      if (artifact) { 
-        const web3 = new Web3(Web3.givenProvider || "HTTP://localhost:7545");
-        const accounts = await web3.eth.requestAccounts();
-        const networkID = await web3.eth.net.getId();
-        const { abi } = artifact;
-        let address, contract;
-        try {
-          address = artifact.networks[networkID].address;
-          // contract = new web3.eth.Contract(abi, "0xa1D61acDe90cb19a68DdA04FAaEF89BDf183610e");
-        } catch (err) {
-          console.error(err);
-        }
-        dispatch({
-          type: actions.init,
-          data: { artifact, web3, accounts, networkID }
-        });
-      }
-    }, []);
+  const [account, setaccount] = useState(null);
+  const [signer, setsigner] = useState();
+  const [provider, setprovider] = useState();
+  const [contract, setcontract] = useState(null);
+  const [Mycredits, setMycredits] = useState(null);
+  const [credits, setcredits] = useState(null);
+
+  const [totalCredits, settotalCredits] = useState([]);
+  const [contractAddress, setcontractAddress] = useState("0x53D8cE78DbfFb9F016476f9A61EA05b3E6b0EB83");
 
   useEffect(() => {
-    const tryInit = async () => {
+
+    console.log('test1');
+    const web3Connector = async () => {
+
       try {
-        const artifact = require("../../../build/contracts/Main.json");
-        init(artifact);
-      } catch (err) {
-        console.error(err);
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const tempP = new ethers.providers.Web3Provider(window.ethereum);
+        const tempSighner = tempP.getSigner();
+        const Contract = new ethers.Contract(contractAddress, mainABI.abi, tempSighner);
+        const _credits = await Contract.getUserCredits();
+
+        setaccount(accounts[0]);
+        setMycredits(_credits);
+        setprovider(tempP);
+        setsigner(tempSighner);
+        setcontract(Contract);
+
+      } catch (error) {
+        console.log(error);
       }
-    };
+    }
 
-    tryInit();
-  }, [init]);
-
-  useEffect(() => {
-    const events = ["chainChanged", "accountsChanged"];
-    const handleChange = () => {
-      init(state.artifact);
-    };
-
-    events.forEach(e => window.ethereum.on(e, handleChange));
-    return () => {
-      events.forEach(e => window.ethereum.removeListener(e, handleChange));
-    };
-  }, [init, state.artifact]);
+    web3Connector();
+  }, [])
 
   return (
-    <EthContext.Provider value={{
-      state,
-      dispatch
-    }}>
+    <EthContext.Provider value={{provider ,signer ,contract ,account ,Mycredits}}>
       {children}
     </EthContext.Provider>
   );
 }
+
 
 export default EthProvider;

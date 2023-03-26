@@ -33,11 +33,11 @@ contract Credit {
 
     //invest in the contract
     function invest() public payable {
-
-       require(lenders[msg.sender]==false);
-
-        lenders[msg.sender] = true;
-        lendersInvestedAmount[msg.sender] = msg.value ;
+    
+    require(msg.sender!=borrower);
+    require(lenders[msg.sender]==false);
+    lenders[msg.sender] = true;
+    lendersInvestedAmount[msg.sender] = msg.value ;
         
 
     }
@@ -84,12 +84,13 @@ contract Credit {
         lendersInvestedAmount[lender] = 0;
     }
 
-    function getCreditDetails() public view returns(address _borrower ,uint _loanAmount ,uint _interest ,uint endTime){
+    function getCreditDetails() public view returns(address _borrower ,uint _loanAmount ,uint _interest ,uint endTime ,State state){
         return(
             borrower,
             loanAmount,
             interestRate,
-            loanEndTime
+            loanEndTime,
+            state
         );
     }
 

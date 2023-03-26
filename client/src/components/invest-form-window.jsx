@@ -9,7 +9,6 @@ export default function InvestFormWindow({ contract, creditData, cancel }) {
 
   const invest = async () => {
 
-    // console.log(contract);
 
     try {
 
@@ -19,7 +18,6 @@ export default function InvestFormWindow({ contract, creditData, cancel }) {
       await contract.invest({ value: valueToSend });
       window.alert(`investment of ${amount} successfull!!`)
       cancel();
-      window.location.reload();
 
     } catch (error) {
       console.log(error);

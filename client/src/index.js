@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import EthProvider from './contexts/EthProvider';
+import { BrowserRouter } from "react-router-dom";
+import EthProvider from './contexts/EthProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-
-  <App />
+<BrowserRouter>
+<EthProvider>
+<App />
+</EthProvider>
+</BrowserRouter>
  
   </React.StrictMode>
 );

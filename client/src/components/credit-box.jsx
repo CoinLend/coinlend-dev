@@ -19,7 +19,7 @@ export default function CreditBox({ address, signer }) {
 
   useEffect(() => {
 
-    console.log(address, signer);
+    // console.log(address, signer);
     const connectWithContract = async () => {
       try {
         const contract = new ethers.Contract(address, creditABI.abi, signer);
@@ -33,7 +33,7 @@ export default function CreditBox({ address, signer }) {
         setcreditData({
           balance: ethers.utils.formatEther(balance),
           borrower: data[0],
-          loanAmount: BigToInt(data[1]),
+          loanAmount: ethers.utils.formatEther(data[1]),
           interestRate: BigToInt(data[2]),
           state: _state
         });
