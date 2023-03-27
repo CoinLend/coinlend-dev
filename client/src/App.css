@@ -1,7 +1,11 @@
+
 body{
-  background-color: #101010;
+  background-color: rgb(20, 20, 20);
 }
-td,th{
-  padding: 20px;
- 
+.home{
+  background-image: url('../public/bg.jpg');
+  background-position: center;
+  background-size: 80rem;
+  
+  object-fit: contain;
 }

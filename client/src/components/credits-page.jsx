@@ -11,7 +11,7 @@ export default function CreditsPage() {
 
         try {
             const credit = await contract.applyForCredit(6, 8, 8);
-            
+
         } catch (error) {
 
             console.log(error.message);
@@ -23,20 +23,37 @@ export default function CreditsPage() {
     useEffect(() => {
         const getAllCredits = async () => {
             try {
-    
+
                 const _credits = await contract.getCredits();
                 setcredits(_credits);
                 console.log(_credits);
-            } catch (error) { 
+            } catch (error) {
                 console.log(error);
             }
         }
         getAllCredits();
     }, [])
-    
+
 
     return (
         <div className=" text-white h-screen">
+            <div className="text-white font-mono flex h-screen ">
+                <div className="w-1/2 my-auto">
+                    <p className="font-semibold p-8 text-center text-4xl">
+                        Credits <span className="text-green-500">Market </span>
+                        Place ,Invest in credit and get profitable returns
+
+                    </p>
+
+
+                    <button onClick={()=>window.scrollTo(0 ,820)} className='scroll-smooth block ml-24 px-4 p-2 bg-orange-500 rounded-lg mt-10'>Start investing {'->'}</button>
+                </div>
+
+                <div>
+                    <img src="investImg.png" className='w-full h-3/4 ml-6 mt-10 ' alt="" />
+                </div>
+
+            </div>
 
             <h3>address : {account}</h3>
 

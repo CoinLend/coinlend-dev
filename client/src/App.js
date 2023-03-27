@@ -36,14 +36,16 @@ function App() {
   return (
     <>
 
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/invest' element={<CreditsPage />} />
-          <Route path='/MyCredits' element={<MyCredits />} />
-          <Route path='/borrow' element={<Borrow/>}/>
-
-        </Routes>
+    <div >
+    <Navbar />
+    <Routes>
+    <Route path='/' element={<Home />} />
+    <Route path='/invest' element={<CreditsPage />} />
+    <Route path='/MyCredits' element={<MyCredits />} />
+    <Route path='/borrow' element={<Borrow/>}/>
+    
+    </Routes>
+    </div>
      
 
 

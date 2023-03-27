@@ -16,7 +16,7 @@ function EthProvider({ children }) {
   const [credits, setcredits] = useState(null);
 
   const [totalCredits, settotalCredits] = useState([]);
-  const [contractAddress, setcontractAddress] = useState("0x53D8cE78DbfFb9F016476f9A61EA05b3E6b0EB83");
+  const [contractAddress, setcontractAddress] = useState("0xd1Ae2Ef689ad772A523B89fd55D66965E45f744F");
 
   useEffect(() => {
 
