@@ -63,7 +63,9 @@ Want to contribute? Great!
 
 # Authors
 
-    Brij Vaghani - vaghanibrij222@gmail.com.com
+    Chaitnya Giri - chaitnyagiri2306@gmail.com
+    Harshal Dube - harshaldube181@gmail.com
+    Brij Vaghani - vaghanibrij222@gmail.com
         LinkedIn - https://www.linkedin.com/in/brij2003/
 
 # License
