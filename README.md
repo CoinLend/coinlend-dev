@@ -66,6 +66,7 @@ Want to contribute? Great!
     Chaitnya Giri - chaitnyagiri2306@gmail.com
     Harshal Dube - harshaldube181@gmail.com
     Brij Vaghani - vaghanibrij222@gmail.com
+    Golla Anjaiah - gollaanjimath123@gmail.com
     
 
 # License
