@@ -34,29 +34,20 @@ contract Main{
      function applyForCredit(uint requestedAmount, uint repaymentsCount, uint interest ) public  returns(Credit _credit) {
         // The user should not have been credited;
         require(users[msg.sender].credited == false);
+ 
+         require(users[msg.sender].fraudStatus == false);
 
-        // THe user should not be marked as fraudlent.
-        require(users[msg.sender].fraudStatus == false);
-
-        // Mark the user as credited. Prevent from reentrancy.
         users[msg.sender].credited = true;
 
-        // Create a new credit contract with the given parameters.
         Credit credit = new Credit(requestedAmount, interest , repaymentsCount ,msg.sender);
 
-        // Set the user's active credit contract.
         users[msg.sender].activeCredit = credit;
 
-        // Add the credit contract to our list with contracts.
         credits.push(credit);
 
         // Add the credit to the user's profile.
         users[msg.sender].allCredits.push(credit);
 
-        // Log the credit creation event.
-        // LogCreditCreated(credit, msg.sender, block.timestamp);
-
-        // Return the address of the newly created credit contract.
         return credit;
     }
 
