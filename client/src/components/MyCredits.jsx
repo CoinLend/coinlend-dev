@@ -8,7 +8,7 @@ const {abi} = require('../contracts/Credit.json');
 export default function MyCredits() {
 
     const {Mycredits ,signer} = useContext(EthContext);
-    console.log(MyCredits);
+    // console.log(MyCredits);
   return (
     <div>
     {

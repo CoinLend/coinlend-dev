@@ -13,6 +13,7 @@ import { EthContext } from './contexts/EthProvider';
 import CreditsPage from './components/credits-page';
 import MyCredits from './components/MyCredits';
 import Borrow from './components/borrow-page';
+import MyInvestmentsPage from './components/my-investment-page';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
     <Route path='/invest' element={<CreditsPage />} />
     <Route path='/MyCredits' element={<MyCredits />} />
     <Route path='/borrow' element={<Borrow/>}/>
+    <Route path='/MyInvestments' element={<MyInvestmentsPage/>}/>
     
     </Routes>
     </div>

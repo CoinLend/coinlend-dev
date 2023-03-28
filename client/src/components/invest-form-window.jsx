@@ -59,7 +59,7 @@ export default function InvestFormWindow({ contract, creditData, cancel }) {
             </div>
             <div className='mb-5'>
               <p>Invested amount : </p>
-              <p className=''>{creditData.balance} ethers</p>
+              <p className=''>{creditData && creditData.balance} ethers</p> 
             </div>
             <div className='mb-5'>
               <p>Return end days : </p>

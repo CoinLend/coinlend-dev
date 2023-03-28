@@ -8,7 +8,6 @@ export default function Borrow() {
     const [interestRate, setinterestRate] = useState(0);
 
     const {contract ,account} = useContext(EthContext);
-
     const applyForCredit  =async()=>{
 
         try {
