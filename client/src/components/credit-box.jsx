@@ -52,7 +52,7 @@ export default function CreditBox({ address, signer }) {
   return (
 
     <>
-      <div className="text-center cursor-pointer grid grid-cols-5 p-2 mt-2 justify-between  rounded-lg shadow-md bg-[#151515] " onClick={() => setopenInvestForm(true)}>
+      <div className="text-center cursor-pointer grid grid-cols-4 p-2 mt-2 justify-between  rounded-lg shadow-md bg-[#151515] " onClick={() => setopenInvestForm(true)}>
 
 
     
@@ -60,7 +60,7 @@ export default function CreditBox({ address, signer }) {
         <p> {creditData && creditData.loanAmount} Ethers</p>
         <p> {creditData && creditData.interestRate} %</p>
         <p>{creditData && creditData.balance} Ethers</p>
-        <button className="p-1 px-1 bg-green-500 font-semibold cursor-pointer hover:bg-green-600 rounded-md">invest</button>
+
 
       </div>
       {openInvestForm && <InvestFormWindow creditData={creditData && creditData} contract={creditContract} cancel={() => setopenInvestForm(false)} />}

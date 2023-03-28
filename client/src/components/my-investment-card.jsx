@@ -25,11 +25,13 @@ export default function MyInvestmentCard({ contract }) {
       window.alert("repayment is not complete on this credit withdraw after completion on repayment from borrower");
       return;
     }
+
     try {
 
       const res = await contract.getRefund();
       
     } catch (error) {
+      window.alert("you already withdrawn from this credit !! ");
       console.log(error);
     }
   }

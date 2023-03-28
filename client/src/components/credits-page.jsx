@@ -57,12 +57,15 @@ export default function CreditsPage() {
 
             <h3>address : {account}</h3>
 
-            <button onClick={applyForCredit}>apply</button>
-
-
             <div className='w-[85%] p-2 rounded-md bg-black shadow-lg  m-auto'>
                 <div className='w-full'>
-                    <p className="text-xl mb-10 font-semibold text-center">Credits Market place</p>
+                    
+                <div className="grid grid-cols-4 text-center justify-between font-bold text-gray-400">
+                <div className="w-24"></div>
+                    <div>Loan amount</div>
+                    <div>Interest rate</div>
+                    <div>Credit balance</div>
+                </div>
 
                     {credits &&
                         credits.map((credit) => {

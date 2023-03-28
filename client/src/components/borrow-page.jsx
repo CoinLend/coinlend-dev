@@ -6,6 +6,7 @@ export default function Borrow() {
 
     const [loanAmount, setloanAmount] = useState(0);
     const [interestRate, setinterestRate] = useState(0);
+    const [endDays, setendDays] = useState(0);
 
     const {contract ,account} = useContext(EthContext);
     const applyForCredit  =async()=>{
@@ -13,7 +14,7 @@ export default function Borrow() {
         try {
             
             var loan = ethers.utils.parseEther(loanAmount.toString()); 
-            const res = await contract.applyForCredit(loan ,interestRate ,4 );
+            const res = await contract.applyForCredit(loan ,4 ,interestRate );
             window.alert("credit created successfully !!! ");
             window.location.reload();
 
@@ -42,6 +43,10 @@ export default function Borrow() {
                     <div className="mb-6">
                         <p>interest rate  :</p>
                         <input type="number" value={interestRate} onChange={(e) => setinterestRate(parseInt(e.target.value))} className="bg-transparent border-b-2 outline-none p-1 border-b-green-500" />
+                    </div>
+                    <div className="mb-6">
+                        <p>for days  :</p>
+                        <input type="number" value={endDays} onChange={(e) => setendDays(parseInt(e.target.value))} className="bg-transparent border-b-2 outline-none p-1 border-b-green-500" />
                     </div>
 
                     <div className="my-5">
