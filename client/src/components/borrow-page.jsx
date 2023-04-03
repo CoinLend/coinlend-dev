@@ -14,7 +14,8 @@ export default function Borrow() {
         try {
             
             var loan = ethers.utils.parseEther(loanAmount.toString()); 
-            const res = await contract.applyForCredit(loan ,4 ,interestRate );
+            const res = await contract.applyForCredit(loan ,interestRate,endDays );
+           
             window.alert("credit created successfully !!! ");
             window.location.reload();
 
@@ -30,6 +31,7 @@ export default function Borrow() {
                     Let Investers invest
 
                 </p>
+                <p className="p-5 text-2xl ml-10">repay in time to improve your credit score and get more investments</p>
             </div>
 
             <div className="my-auto w-1/2 ">

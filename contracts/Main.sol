@@ -17,8 +17,12 @@ contract Main{
         // Is the user marked as fraudlent.
         bool fraudStatus;
 
+        uint creditScore;
+
         // All user credits.
         Credit[] allCredits;
+
+        address[] investedCredits;
     }
 
     // We store all users in a mapping.
@@ -31,7 +35,7 @@ contract Main{
         array.push(msg.sender);
     }
 
-     function applyForCredit(uint requestedAmount, uint repaymentsCount, uint interest ) public  returns(Credit _credit) {
+     function applyForCredit(uint requestedAmount, uint interest, uint endDays ) public  returns(Credit _credit) {
         // The user should not have been credited;
         require(users[msg.sender].credited == false);
  
@@ -39,7 +43,7 @@ contract Main{
 
         users[msg.sender].credited = true;
 
-        Credit credit = new Credit(requestedAmount, interest , repaymentsCount ,msg.sender);
+        Credit credit = new Credit(requestedAmount, interest , endDays ,msg.sender);
 
         users[msg.sender].activeCredit = credit;
 
@@ -68,7 +72,26 @@ contract Main{
     function getCredits() public view returns(Credit []memory){
         return credits;
     }
-    
+
+    function updateCreditScore(uint points ,address borrower) external{
+
+        users[borrower].creditScore = users[borrower].creditScore + points;
+    }
+
+    function getScore(address borrower)public view returns(uint){
+
+        return users[borrower].creditScore;
+    }
+
+    function addToInvestedCredits(address lender ,address credit) public{ 
+
+        users[lender].investedCredits.push(credit);
+    }
+    function getInvestedCredits() public view returns(address []memory){
+
+        return users[msg.sender].investedCredits;
+    }
+     
 
 }
 

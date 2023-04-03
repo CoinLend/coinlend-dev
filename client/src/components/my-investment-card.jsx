@@ -26,6 +26,7 @@ export default function MyInvestmentCard({ contract }) {
       return;
     }
 
+    console.log(contract);  
     try {
 
       const res = await contract.getRefund();
@@ -73,7 +74,7 @@ export default function MyInvestmentCard({ contract }) {
       <div className='credit-info grid gap-10  grid-cols-2'>
 
         <div className='my-2 col-span-2'>
-          <p className='my-1 font-semibold  bg-gradient-to-b text-gray-400'>credit Address: </p>
+          <p className='my-1 font-semibold  bg-gradient-to-b text-gray-400'>borrower Address: </p>
           <p>{creditData && creditData.borrower} </p>
         </div>
 

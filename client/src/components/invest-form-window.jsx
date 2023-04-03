@@ -5,7 +5,7 @@ export default function InvestFormWindow({ contract, creditData, cancel }) {
 
   const [amount, setamount] = useState(0);
   const [returns, setreturns] = useState(0);
-  const states = ["investment" ,"repayment" ,"repayment complete"];
+  const states = ["investment" ,"repayment" ,"repayment complete" ,"expired"];
 
   const invest = async () => {
 
@@ -41,12 +41,12 @@ export default function InvestFormWindow({ contract, creditData, cancel }) {
 
         <div className="flex p-8 justify-between rounded-lg bg-black  absolute shadow-lg">
 
-          <div className="credit-info mr-12 border-2 rounded-md border-gray-400 p-5">
+          <div className="credit-info mr-12 rounded-md bg-gray-900 shadow-lg shadow-[#3c3c3c] border-gray-400 p-5">
 
             <p className="font-semibold text-center my-2 text-xl">Credit Details </p>
 
             <div className='mb-5'>
-              <p>Credit State </p>
+              <p>Credit State :</p>
               <p className='font-semibold text-green-500'>{states[creditData && creditData.state]}</p>
             </div>
             <div className='mb-5'>
