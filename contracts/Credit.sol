@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import './Main.sol';
+
 pragma solidity >0.7.0;
 
 contract Credit {
@@ -17,6 +19,8 @@ contract Credit {
     uint public loanEndTime;
     bool public isFraudulent;
     bool public active = true;
+    address MainContractAddress;
+
     //lenders of the contract
     mapping(address => bool) public lenders;
 
@@ -29,12 +33,13 @@ contract Credit {
         address borrowerAddress
     ) {
         borrower = payable(borrowerAddress);
+        MainContractAddress = msg.sender;
         //  require(msg.value >= _loanAmount, "Not enough ether sent to cover loan amount");
         // borrower = payable(_borrower);
         state = State.investment;
         loanAmount = _loanAmount;
         interestRate = _interestRate;
-        loanEndTime = block.timestamp + (_loanDurationInDays * 1 days);
+        loanEndTime = block.timestamp + (_loanDurationInDays * 1 minutes);
     }
 
     //invest in the contract
@@ -43,6 +48,9 @@ contract Credit {
         require(msg.sender != borrower);
         require(lenders[msg.sender] == false);
         lenders[msg.sender] = true;
+        Main mainContract = Main(MainContractAddress);
+        mainContract.addToInvestedCredits(msg.sender, address(this));
+
         lendersInvestedAmount[msg.sender] = msg.value;
     }
 
@@ -55,13 +63,23 @@ contract Credit {
     }
 
     function repay() external payable {
+
+
         require(borrower == msg.sender);
         require(state == State.repayment);
         require(
             uint(msg.value) >= loanAmount + ((loanAmount * interestRate) / 100),
             "Payment amount is incorrect"
         );
-        require(block.timestamp <= loanEndTime, "Loan has already expired");
+
+        if(block.timestamp<=loanEndTime){
+
+            uint points = (loanEndTime - block.timestamp)*2;
+            Main mainContract = Main(MainContractAddress);
+            mainContract.updateCreditScore(points, borrower);
+
+        }
+        // require(block.timestamp <= loanEndTime, "Loan has already expired");
 
         uint extra = 0;
         extra = msg.value - address(this).balance;

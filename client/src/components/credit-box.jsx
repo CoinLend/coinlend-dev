@@ -1,13 +1,19 @@
 import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { EthContext } from "../contexts/EthProvider";
 import InvestFormWindow from "./invest-form-window";
 const creditABI = require("../contracts/Credit.json");
 
 export default function CreditBox({ address, signer }) {
 
+  const states =["investment" , "repayment", "expired" ,"repaymentComplete"];
+
+
   const [creditContract, setcreditContract] = useState(null);
   const [creditData, setcreditData] = useState(null);
   const [openInvestForm, setopenInvestForm] = useState(false);
+
+  const {contract } = useContext(EthContext);
 
   const BigToInt = (bigNumber) => {
 
@@ -22,21 +28,24 @@ export default function CreditBox({ address, signer }) {
     // console.log(address, signer);
     const connectWithContract = async () => {
       try {
-        const contract = new ethers.Contract(address, creditABI.abi, signer);
-        const data = await contract.getCreditDetails();
+        const _creditContract = new ethers.Contract(address, creditABI.abi, signer);
+        console.log(_creditContract);
+        const data = await _creditContract.getCreditDetails();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const balance = await provider.getBalance(address);
-        const _state = await contract.state();
-
+        const _state = await _creditContract.state();
+         const _score =  await contract.getScore(data[0]);
+        
         // console.log(data);
-        setcreditContract(contract);
+        setcreditContract(_creditContract);
         // console.log(data);
         setcreditData({
           balance: ethers.utils.formatEther(balance),
           borrower: data[0],
           loanAmount: ethers.utils.formatEther(data[1]),
           interestRate: BigToInt(data[2]),
-          state: _state
+          state: BigToInt(_state),
+          creditScore:BigToInt(_score),
         });
       } catch (error) {
         console.log(error);
@@ -52,7 +61,7 @@ export default function CreditBox({ address, signer }) {
   return (
 
     <>
-      <div className="text-center cursor-pointer grid grid-cols-4 p-2 mt-2 justify-between  rounded-lg shadow-md bg-[#151515] " onClick={() => setopenInvestForm(true)}>
+      <div className="text-center cursor-pointer grid grid-cols-5 p-2 mt-2 justify-between  rounded-lg shadow-md bg-[#151515] " onClick={() => setopenInvestForm(true)}>
 
 
     
@@ -60,8 +69,8 @@ export default function CreditBox({ address, signer }) {
         <p> {creditData && creditData.loanAmount} Ethers</p>
         <p> {creditData && creditData.interestRate} %</p>
         <p>{creditData && creditData.balance} Ethers</p>
-
-
+        <p>{creditData && creditData.creditScore} 🪙</p>
+        
       </div>
       {openInvestForm && <InvestFormWindow creditData={creditData && creditData} contract={creditContract} cancel={() => setopenInvestForm(false)} />}
     </>

@@ -26,7 +26,7 @@ export default function CreditsPage() {
 
                 const _credits = await contract.getCredits();
                 setcredits(_credits);
-                console.log(_credits);
+                // console.log(_credits);
             } catch (error) {
                 console.log(error);
             }
@@ -37,16 +37,16 @@ export default function CreditsPage() {
 
     return (
         <div className=" text-white h-screen">
-            <div className="text-white font-mono flex h-screen ">
+            <div className="text-white font-mono flex h-screen " >
                 <div className="w-1/2 my-auto">
                     <p className="font-semibold p-8 text-center text-4xl">
-                        Credits <span className="text-green-500">Market </span>
-                        Place ,Invest in credit and get profitable returns
+
+                        Invest in credit and get profitable returns
 
                     </p>
 
 
-                    <button onClick={()=>window.scrollTo(0 ,820)} className='scroll-smooth block ml-24 px-4 p-2 bg-orange-500 rounded-lg mt-10'>Start investing {'->'}</button>
+                    <button onClick={() => window.scrollTo(0, 820)} className='scroll-smooth block ml-24 px-4 p-2 bg-orange-500 rounded-lg mt-10'>Start investing {'->'}</button>
                 </div>
 
                 <div>
@@ -57,28 +57,34 @@ export default function CreditsPage() {
 
             <h3>address : {account}</h3>
 
-            <div className='w-[85%] p-2 rounded-md bg-black shadow-lg  m-auto'>
-                <div className='w-full'>
-                    
-                <div className="grid grid-cols-4 text-center justify-between font-bold text-gray-400">
-                <div className="w-24"></div>
-                    <div>Loan amount</div>
-                    <div>Interest rate</div>
-                    <div>Credit balance</div>
+            <div className="h-screen">
+                <div className=' w-[85%] h-[80%] overflow-y-scroll p-2 rounded-md bg-black shadow-lg  m-auto'>
+                    <div className='w-full'>
+
+                    <p className="text-3xl font-semibold mb-8 text-center"> <span className='text-green-500'>| Credit</span> Market Place |</p>
+                        <div className="grid grid-cols-5 text-center justify-between font-bold text-gray-400">
+                            <div className="w-24"></div>
+                            <div>Loan amount</div>
+                            <div>Interest rate</div>
+                            <div>Credit balance</div> 
+                            <div>Credit Score</div>
+
+
+                        </div>
+
+                        {credits &&
+                            credits.map((credit) => {
+                                return (
+                                    
+                                    <CreditBox address={credit} signer={signer} />
+
+                                )
+                            })
+                        }
+
+                    </div>
+
                 </div>
-
-                    {credits &&
-                        credits.map((credit) => {
-                            return (
-
-                                <CreditBox address={credit} signer={signer} />
-
-                            )
-                        })
-                    }
-
-                </div>
-
             </div>
         </div>
     )
