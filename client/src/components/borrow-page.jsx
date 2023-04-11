@@ -8,15 +8,16 @@ export default function Borrow() {
     const [interestRate, setinterestRate] = useState(0);
     const [endDays, setendDays] = useState(0);
 
-    const {contract ,account} = useContext(EthContext);
+    const {contract ,account ,setTransaction} = useContext(EthContext);
+
     const applyForCredit  =async()=>{
 
         try {
             
             var loan = ethers.utils.parseEther(loanAmount.toString()); 
             const res = await contract.applyForCredit(loan ,interestRate,endDays );
-           
             window.alert("credit created successfully !!! ");
+            setTransaction(res);
             window.location.reload();
 
         } catch (error) {

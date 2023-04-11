@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ethers } from 'ethers';
+import { EthContext } from '../contexts/EthProvider';
 
 export default function MyCreditCard({ contract }) {
 
-  const states =["investment" , "repayment", "expired" ,"repaymentComplete"];
+  const states =["investment" , "repayment", "expired" ,"repayment complete"];
 
     // console.log(contract);
     const [creditData, setcreditData] = useState(null);
     const [repayAmount, setrepayAmount] = useState(null);
+    const {setTransaction} = useContext(EthContext);
 
     const repay = async()=>{
 
@@ -16,7 +18,9 @@ export default function MyCreditCard({ contract }) {
             var value = parseInt(creditData.loanAmount)+parseInt(creditData.loanAmount)*creditData.interestRate/100;
             console.log(value);
             value = ethers.utils.parseEther(value.toString());
-             const res = await contract.repay({value:value});
+            const res = await contract.repay({value:value});
+
+             setTransaction(res);
         } catch (error) {
             console.log(error);
         }
@@ -30,6 +34,8 @@ export default function MyCreditCard({ contract }) {
         try {
             const res = await contract.withdraw();
             window.alert("payment withdrawn complete transaction added to the block !!")
+            setTransaction(res);
+
         } catch (error) {
             console.log(error);
         }

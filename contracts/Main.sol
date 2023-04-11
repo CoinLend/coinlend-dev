@@ -17,7 +17,7 @@ contract Main{
         // Is the user marked as fraudlent.
         bool fraudStatus;
 
-        uint creditScore;
+        int creditScore;
 
         // All user credits.
         Credit[] allCredits;
@@ -73,12 +73,12 @@ contract Main{
         return credits;
     }
 
-    function updateCreditScore(uint points ,address borrower) external{
+    function updateCreditScore(int points ,address borrower) external{
 
         users[borrower].creditScore = users[borrower].creditScore + points;
     }
 
-    function getScore(address borrower)public view returns(uint){
+    function getScore(address borrower)public view returns(int){
 
         return users[borrower].creditScore;
     }
@@ -87,9 +87,16 @@ contract Main{
 
         users[lender].investedCredits.push(credit);
     }
+
     function getInvestedCredits() public view returns(address []memory){
 
         return users[msg.sender].investedCredits;
+    }
+
+    //changing credit status of borrower after repayment of before credit
+    function changeCreditStatus(address borrower) public{
+
+        users[borrower].credited = false;
     }
      
 

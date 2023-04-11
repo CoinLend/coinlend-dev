@@ -4,7 +4,7 @@ import { EthContext } from '../contexts/EthProvider';
 
 export default function MyInvestmentCard({ contract }) {
 
-  const states =["investment", "repayment", "expired" ,"repaymentComplete"];
+  const states =["investment", "repayment", "expired" ,"repayment complete"];
 
   const { account } = useContext(EthContext);
   const [creditData, setcreditData] = useState(null);
@@ -76,6 +76,11 @@ export default function MyInvestmentCard({ contract }) {
         <div className='my-2 col-span-2'>
           <p className='my-1 font-semibold  bg-gradient-to-b text-gray-400'>borrower Address: </p>
           <p>{creditData && creditData.borrower} </p>
+        </div>
+
+        <div className=' col-span-2'>
+          <p className='my-1 font-semibold  bg-gradient-to-b text-gray-400'>contract Address: </p>
+          <p>{contract && contract.address} </p>
         </div>
 
         <div className='my-4'>

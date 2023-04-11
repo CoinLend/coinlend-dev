@@ -1,22 +1,24 @@
 import React, { useState } from 'react'
 import { ethers } from 'ethers';
+import { useContext } from 'react';
+import { EthContext } from '../contexts/EthProvider';
 
 export default function InvestFormWindow({ contract, creditData, cancel }) {
 
   const [amount, setamount] = useState(0);
   const [returns, setreturns] = useState(0);
   const states = ["investment" ,"repayment" ,"repayment complete" ,"expired"];
+  const {setTransaction} = useContext(EthContext);
 
   const invest = async () => {
 
-
     try {
-
 
       const valueToSend = ethers.utils.parseEther(amount.toString()); // Convert 1 ETH to wei
       console.log(valueToSend);
-      await contract.invest({ value: valueToSend });
+      const res = await contract.invest({ value: valueToSend });
       window.alert(`investment of ${amount} successfull!!`)
+      setTransaction(res);
       cancel();
 
     } catch (error) {

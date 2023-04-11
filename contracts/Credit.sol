@@ -34,13 +34,12 @@ contract Credit {
     ) {
         borrower = payable(borrowerAddress);
         MainContractAddress = msg.sender;
-        //  require(msg.value >= _loanAmount, "Not enough ether sent to cover loan amount");
-        // borrower = payable(_borrower);
+        
         state = State.investment;
-        loanAmount = _loanAmount;
+        loanAmount = _loanAmount; 
         interestRate = _interestRate;
         loanEndTime = block.timestamp + (_loanDurationInDays * 1 minutes);
-    }
+    } 
 
     //invest in the contract
     function invest() public payable {
@@ -72,20 +71,23 @@ contract Credit {
             "Payment amount is incorrect"
         );
 
+        Main mainContract = Main(MainContractAddress);
+
         if(block.timestamp<=loanEndTime){
 
-            uint points = (loanEndTime - block.timestamp)*2;
-            Main mainContract = Main(MainContractAddress);
+            int points = int(loanEndTime - block.timestamp)*2;
             mainContract.updateCreditScore(points, borrower);
 
         }
-        // require(block.timestamp <= loanEndTime, "Loan has already expired");
+        
 
         uint extra = 0;
         extra = msg.value - address(this).balance;
         borrower.transfer(extra);
 
         state = State.repaymentComplete;
+
+        mainContract.changeCreditStatus(msg.sender);
         // lender.transfer(msg.value);
     }
 
@@ -98,14 +100,12 @@ contract Credit {
         uint interestAmount  = ((lendersInvestedAmount[lender] * interestRate)/100);
         uint amount = lendersInvestedAmount[lender] + interestAmount;
 
+        lender.transfer(amount);
+
         if (address(this).balance == 0) {
             state = State.expired;
         }
 
-        lender.transfer(amount);
-        if(address(this).balance==0){
-            state = State.expired;
-        }
         lendersInvestedAmount[lender] = 0;
     }
 

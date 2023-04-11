@@ -19,19 +19,8 @@ function App() {
 
 
 
-  const {account} = useContext(EthContext);
-  // console.log(account);
-  // const applyForCredit = async () => {
-
-  //   try {
-  //     const credit = await contract.applyForCredit(6, 8, 8);
-
-  //   } catch (error) {
-
-  //     console.log(error.message);
-  //   }
-
-  // }
+  const {account } = useContext(EthContext);
+  
 
 
   return (

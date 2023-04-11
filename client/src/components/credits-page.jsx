@@ -25,6 +25,7 @@ export default function CreditsPage() {
             try {
 
                 const _credits = await contract.getCredits();
+            
                 setcredits(_credits);
                 // console.log(_credits);
             } catch (error) {
